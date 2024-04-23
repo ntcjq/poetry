@@ -40,4 +40,10 @@ public class InitController {
         return "success";
     }
 
+    @RequestMapping("initIndex")
+    public String initIndex() {
+
+        return "success";
+    }
+
 }
