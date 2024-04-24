@@ -1,5 +1,7 @@
 package com.sea.controller;
 
+import com.sea.enums.ResponseEnum;
+import com.sea.response.BaseResponse;
 import com.sea.service.InitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,7 @@ public class InitController {
     private InitService initService;
 
     @RequestMapping("addPoetry")
-    public String addPoetry() {
+    public BaseResponse addPoetry() {
         String fileName = "";
         for (int i = 461; i <= 900; i++) {
             if (i < 10) {
@@ -31,19 +33,13 @@ public class InitController {
             System.out.println("------------------:" + i);
             initService.initPoetry(fileName);
         }
-        return "success";
+        return new BaseResponse(ResponseEnum.SUCCESS);
     }
 
     @RequestMapping("addAuthor")
-    public String addAuthor(String fileName) {
+    public BaseResponse addAuthor(String fileName) {
         initService.initAuthor(fileName);
-        return "success";
-    }
-
-    @RequestMapping("initIndex")
-    public String initIndex() {
-
-        return "success";
+        return new BaseResponse(ResponseEnum.SUCCESS);
     }
 
 }

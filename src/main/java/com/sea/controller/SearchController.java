@@ -1,7 +1,7 @@
 package com.sea.controller;
 
-import com.meilisearch.sdk.model.SearchResult;
-import com.meilisearch.sdk.model.SearchResultPaginated;
+import com.sea.enums.ResponseEnum;
+import com.sea.response.BaseResponse;
 import com.sea.rquest.SearchReq;
 import com.sea.service.MeiliSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,24 @@ public class SearchController {
     private MeiliSearchService meiliSearchService;
 
     @RequestMapping("simple")
-    public SearchResult simple(String keyword) {
-        return meiliSearchService.keywordQuery(keyword);
+    public BaseResponse simple(String keyword) {
+        return new BaseResponse(ResponseEnum.SUCCESS, meiliSearchService.keywordQuery(keyword));
     }
 
     @RequestMapping("multiple")
-    public SearchResultPaginated multiple(@RequestBody SearchReq req) {
-        return meiliSearchService.multipleQuery(req);
+    public BaseResponse multiple(@RequestBody SearchReq req) {
+        return new BaseResponse(ResponseEnum.SUCCESS, meiliSearchService.multipleQuery(req));
     }
 
+    @RequestMapping("sortConfig")
+    public BaseResponse sortConfig(@RequestBody String[] sorts) {
+        meiliSearchService.updateSorts(sorts);
+        return new BaseResponse(ResponseEnum.SUCCESS);
+    }
+
+    @RequestMapping("filterConfig")
+    public BaseResponse filterConfig(@RequestBody String[] filters) {
+        meiliSearchService.updateFilters(filters);
+        return new BaseResponse(ResponseEnum.SUCCESS);
+    }
 }
