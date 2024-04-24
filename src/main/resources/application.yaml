@@ -1,5 +1,5 @@
 poetry:
-  filePath: /Users/jiaqi.cui/local/workspace/chinese-poetry/json
+  filePath: /Users/jiaqi.cui/local/workspace/chinese-poetry
 
 server:
   port: 8888
@@ -16,5 +16,5 @@ spring:
       ddl-auto: none # 自动更新
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl #更改默认命名策略
-    show-sql: true  # 控制台打印SQl语句
+    show-sql: false  # 控制台打印SQl语句
 

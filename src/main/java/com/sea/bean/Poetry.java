@@ -1,5 +1,6 @@
 package com.sea.bean;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -17,9 +18,11 @@ import javax.persistence.Id;
 public class Poetry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JSONField(deserialize = false)
     private Long id;
     private String author;//作者
     private String title;//标题
     private String paragraphs;//内容
+    @JSONField(deserialize = false)
     private String tags;//标签
 }

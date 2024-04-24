@@ -1,12 +1,13 @@
 package com.sea.service;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.sea.bean.Author;
 import com.sea.bean.Poetry;
 import com.sea.dao.AuthorRepository;
 import com.sea.dao.PoetryRepository;
 import com.sea.dto.AuthorDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import java.util.List;
  * @author: jiaqi.cui
  * @date: 2023/1/12
  */
-
+@Slf4j
 @Service
 public class InitService {
 
@@ -65,13 +66,10 @@ public class InitService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
         List<Poetry> poetries = JSON.parseArray(json, Poetry.class);
-        for (Poetry poetry : poetries) {
-            poetry.setTags("唐诗");
-            poetryRepository.save(poetry);
-        }
+        log.warn("initPoetry fileName={},size={}", fileName, poetries.size());
+        poetryRepository.saveAll(poetries);
     }
 
     @Transactional
