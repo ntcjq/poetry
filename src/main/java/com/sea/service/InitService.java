@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,16 +102,17 @@ public class InitService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
         List<AuthorDto> authors = JSON.parseArray(json, AuthorDto.class);
+        List<Author> authorList = new ArrayList<>();
         for (AuthorDto authorDto : authors) {
             Author author = new Author();
             author.setTags("宋");
             author.setName(authorDto.getName());
             author.setProfile(authorDto.getDesc());
-            authorRepository.save(author);
+            authorList.add(author);
         }
+        authorRepository.saveAll(authorList);
     }
 
 }
