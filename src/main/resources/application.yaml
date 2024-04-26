@@ -18,3 +18,19 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl #更改默认命名策略
     show-sql: false  # 控制台打印SQl语句
 
+# springBoot 默认使用 LogBack 日志系统
+
+# %d{HH:mm:ss.SSS}：日志输出时间
+# %thread：输出日志的进程名字，这在Web应用以及异步任务处理中很有用
+# %-5level：日志级别，并且使用5个字符靠左对齐
+# %logger- :日志输出者的名字
+# %msg：日志消息
+# %n：平台的换行符
+
+# logging.pattern.console 用于设定日志输出格式
+# logging.pattern.file 用于设定输出到 log 文件的日志格式
+logging:
+  pattern:
+  # console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger- %msg%n'
+  # file: '%d{yyyy-MM-dd HH:mm} [%thread] %-5level %logger- %msg%'
+

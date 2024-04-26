@@ -1,7 +1,11 @@
 package com.sea.controller;
 
 import com.github.houbb.heaven.util.util.DateUtil;
+import com.sea.enums.ResponseEnum;
+import com.sea.response.BaseResponse;
+import com.sea.service.AsyncService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
@@ -20,6 +24,9 @@ import java.util.Date;
 @RequestMapping("test")
 public class TestController {
 
+    @Autowired
+    private AsyncService asyncService;
+
     @RequestMapping("retry")
     @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 2000, multiplier = 1.5))
     public String retry() {
@@ -37,5 +44,22 @@ public class TestController {
     public String recover(Exception e) throws Exception {
         log.info("------------recover--------" + DateUtil.getDateFormat(new Date(), "yyyy-MM-dd HH:mm:ss"));
         return "Recover";
+    }
+
+
+    /**
+     * Async异步注解测试
+     *
+     * @return
+     * @throws InterruptedException
+     */
+    @RequestMapping("async")
+    public BaseResponse async() throws InterruptedException {
+        log.info("TestController async start");
+        log.info("TestController async normal business");
+        asyncService.sendMsg1();
+        asyncService.sendMsg2();
+        log.info("TestController async end");
+        return new BaseResponse(ResponseEnum.SUCCESS);
     }
 }
