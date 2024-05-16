@@ -70,6 +70,12 @@ public class InitService {
         }
         List<Poetry> poetries = JSON.parseArray(json, Poetry.class);
         log.warn("initPoetry fileName={},size={}", fileName, poetries.size());
+        for (Poetry poetry : poetries) {
+            String paragraphs = poetry.getParagraphs();
+            //保留纯文本
+            paragraphs = paragraphs.replaceAll("\"", "").replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("。,", "。");
+            poetry.setParagraphs(paragraphs);
+        }
         poetryRepository.saveAll(poetries);
     }
 
