@@ -1,6 +1,8 @@
 package com.sea.controller;
 
 import com.github.houbb.heaven.util.util.DateUtil;
+import com.sea.bean.Author;
+import com.sea.dao.AuthorRepository;
 import com.sea.enums.ResponseEnum;
 import com.sea.response.BaseResponse;
 import com.sea.service.AsyncService;
@@ -12,6 +14,7 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -26,6 +29,8 @@ public class TestController {
 
     @Autowired
     private AsyncService asyncService;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @RequestMapping("retry")
     @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 2000, multiplier = 1.5))
@@ -61,5 +66,36 @@ public class TestController {
         asyncService.sendMsg2();
         log.info("TestController async end");
         return new BaseResponse(ResponseEnum.SUCCESS);
+    }
+
+
+    @RequestMapping("insert")
+    public BaseResponse insert() {
+        String profile = """
+                ABC
+                DEF
+                GHI
+                JKL
+                """;
+        Author author = new Author();
+        author.setName("Sea");
+        author.setProfile(profile);
+        author.setTags("SONG");
+        authorRepository.save(author);
+        author = null;
+        author.getId();
+        return new BaseResponse(ResponseEnum.SUCCESS);
+    }
+
+    public static void main(String[] args) {
+
+        Instant now = Instant.now();
+        System.out.println(now);
+
+        String profile = " ABC ";
+        profile = profile.strip();
+        System.out.println(profile);
+        profile = profile.repeat(2);
+        System.out.println(profile);
     }
 }
